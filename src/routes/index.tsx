@@ -1,10 +1,10 @@
-import App from "@/App";
+import Mains from "@/roots/Mains";
 import { createBrowserRouter } from "react-router";
 
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <App/>,
+    element: <Mains/>,
   },
 ]);
 export default router;
