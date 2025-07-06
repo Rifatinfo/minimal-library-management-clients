@@ -1,6 +1,7 @@
 import type { RootState } from "@/redux/store";
 import type { IBook } from "@/types";
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
+import { v4 as uuidv4 } from 'uuid';
 
 interface InitialState {
     books: IBook[],
@@ -10,7 +11,7 @@ interface InitialState {
 const initialState: InitialState = {
     books: [
         {
-            id: 1,
+            id: "1",
             Title: "The Great Gatsby",
             Author: "F. Scott Fitzgerald",
             ISBN: "9780743273565",
@@ -20,7 +21,7 @@ const initialState: InitialState = {
             Genre: "Classic"
         },
         {
-            id: 2,
+            id: "2",
             Title: "Wuthering Heights",
             Author: "Emily Brontë",
             ISBN: "9780141439556",
@@ -30,7 +31,7 @@ const initialState: InitialState = {
             Genre: "Romance"
         },
         {
-            id: 3,
+            id: "3",
             Title: "Frankenstein",
             Author: "Mary Shelley",
             ISBN: "9780486282114",
@@ -40,7 +41,7 @@ const initialState: InitialState = {
             Genre: "Horror"
         },
         {
-            id: 4,
+            id: "4",
             Title: "Murder on the Orient Express",
             Author: "Agatha Christie",
             ISBN: "9780062073495",
@@ -50,7 +51,7 @@ const initialState: InitialState = {
             Genre: "Mystery"
         },
         {
-            id: 5,
+            id: "5",
             Title: "Dune",
             Author: "Frank Herbert",
             ISBN: "9780441172719",
@@ -60,7 +61,7 @@ const initialState: InitialState = {
             Genre: "Science "
         },
         {
-            id: 6,
+            id: "6",
             Title: "Jane Eyre",
             Author: "Charlotte Brontë",
             ISBN: "9780141441146",
@@ -70,7 +71,7 @@ const initialState: InitialState = {
             Genre: "Literary"
         },
         {
-            id: 7,
+            id: "7",
             Title: "Gone with the Wind",
             Author: "Margaret Mitchell",
             ISBN: "9781451635621",
@@ -80,7 +81,7 @@ const initialState: InitialState = {
             Genre: "Historical "
         },
         {
-            id: 8,
+            id: "8",
             Title: "The Hobbit",
             Author: "J.R.R. Tolkien",
             ISBN: "9780345339683",
@@ -90,7 +91,7 @@ const initialState: InitialState = {
             Genre: "Fantasy"
         },
         {
-            id: 9,
+            id: "9",
             Title: "The Call of the Wild",
             Author: "Jack London",
             ISBN: "9780141321059",
@@ -100,7 +101,7 @@ const initialState: InitialState = {
             Genre: "Adventure"
         },
         {
-            id: 10,
+            id: "10",
             Title: "Lonesome Dove",
             Author: "Larry McMurtry",
             ISBN: "9781439195260",
@@ -117,7 +118,17 @@ const bookSlice = createSlice({
     name: "book",
     initialState,
     reducers: {
-
+       addBook : (state, action : PayloadAction<IBook>) =>{
+        const id = uuidv4();
+        const ISBN = uuidv4(); 
+        const bookData = {
+            ...action.payload,
+            id,
+            Available : true,
+            ISBN
+        } 
+        state.books.push(bookData)
+       }
     }
 })
 
@@ -127,4 +138,6 @@ export const selectBooks = (state : RootState) => {
 export const filterBooks = (state : RootState) => {
     return state.todoBooks.filter;
 }
+
+export const {addBook} = bookSlice.actions; 
 export default bookSlice.reducer;

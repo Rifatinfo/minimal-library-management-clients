@@ -20,6 +20,9 @@ import {
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { addBook } from "@/redux/features/book/bookSlice";
+import { useAppDispatch } from "@/redux/hooks/hooks";
+import type { IBook } from "@/types";
 
 
 import { useState } from "react";
@@ -27,11 +30,12 @@ import { useForm, type FieldValues, type SubmitHandler } from "react-hook-form";
 
 export function AddModalBook() {
     const [open, setOpen] = useState(false);
-   
+     const dispatch = useAppDispatch();
     const form = useForm();
 
     const onSubmit: SubmitHandler<FieldValues> = (data) => {
         console.log("Form Data:", data);
+        dispatch(addBook(data as IBook))
         setOpen(false);
         form.reset();
     };

@@ -1,5 +1,5 @@
 export interface IBook {
-    id: number;
+    id: string;
     Title: string;
     Author: string;
     ISBN: string;
