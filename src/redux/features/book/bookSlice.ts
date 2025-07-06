@@ -36,7 +36,7 @@ const initialState: InitialState = {
             ISBN: "9780486282114",
             Description: "A Gothic horror novel exploring the dangers of unchecked scientific ambition.",
             Copies: 4,
-            Available: false,
+            Available: true,
             Genre: "Horror"
         },
         {
@@ -76,7 +76,7 @@ const initialState: InitialState = {
             ISBN: "9781451635621",
             Description: "A sweeping historical romance set during the American Civil War.",
             Copies: 5,
-            Available: false,
+            Available: true,
             Genre: "Historical "
         },
         {
