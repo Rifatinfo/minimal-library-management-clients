@@ -4,7 +4,6 @@ import { Outlet } from "react-router";
 const Mains = () => {
     return (
         <div>
-
             <Navbar/>
             <Outlet/>
         </div>
