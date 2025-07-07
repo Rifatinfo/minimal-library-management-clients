@@ -23,14 +23,13 @@ import {
     SelectTrigger,
     SelectValue,
 } from "@/components/ui/select";
-import { , useState } from "react";
+import { useState } from "react";
 
-import { useForm } from "react-hook-form";
-// import { useUpdateBookMutation } from "@/redux/api/itemCreateAPI"; // Replace with your update API
+import {useForm, type FieldValues, type SubmitHandler } from "react-hook-form";
 
 export function UpdateBook() {
     const [open, setOpen] = useState(false);
-    const form = useForm({
+    const form = useForm<FieldValues>({
         defaultValues: {
             title: "",
             description: "",
@@ -41,7 +40,11 @@ export function UpdateBook() {
     });
 
   
-
+ // ✅ Declare onSubmit BEFORE the JSX
+  const onSubmit: SubmitHandler<FieldValues> = async () => {
+    setOpen(false);
+    form.reset();
+  };
     return (
         <Dialog open={open} onOpenChange={setOpen}>
             <DialogContent className="sm:max-w-[425px]">
@@ -136,7 +139,7 @@ export function UpdateBook() {
                                     Cancel
                                 </Button>
                             </DialogClose>
-                            <Button disabled={isLoading} type="submit">
+                            <Button  type="submit">
                                 Save changes
                             </Button>
                         </DialogFooter>

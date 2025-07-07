@@ -3,8 +3,7 @@ import { MdDelete } from "react-icons/md";
 import { TableCell, TableRow } from "@/components/ui/table";
 import type { IBook } from "@/types";
 import { cn } from "@/lib/utils";
-import { useAppDispatch } from "@/redux/hooks/hooks";
-import { deleteBook } from "@/redux/features/book/bookSlice";
+import { useDeleteBookMutation } from "@/redux/api/itemCreateAPI";
 
 interface IProps {
   book: IBook;
@@ -12,8 +11,8 @@ interface IProps {
 }
 
 const AllBookTable = ({ book, onEdit }: IProps) => {
-  const dispatch = useAppDispatch();
-
+    const [deleteBook] =  useDeleteBookMutation();
+  
   return (
     <TableRow className="border-b hover:bg-muted transition-colors">
       <TableCell className="whitespace-nowrap px-4 py-2">
@@ -44,7 +43,7 @@ const AllBookTable = ({ book, onEdit }: IProps) => {
       </TableCell>
       <TableCell className="text-center px-4 py-2">
         <MdDelete
-          onClick={() => dispatch(deleteBook(book._id))}
+            onClick={() => deleteBook({ bookId: book._id })}
           className="text-red-500 hover:text-red-700 text-xl cursor-pointer transition"
         />
       </TableCell>

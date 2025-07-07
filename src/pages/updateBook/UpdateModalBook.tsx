@@ -22,6 +22,7 @@ import {
     SelectTrigger,
     SelectValue,
 } from "@/components/ui/select";
+import { useUpdateBookMutation } from "@/redux/api/itemCreateAPI";
 import type { IBook } from "@/types";
 import { useEffect } from "react";
 import { useForm, type FieldValues, type SubmitHandler } from "react-hook-form";
@@ -33,6 +34,7 @@ interface IProps {
 }
 
 const UpdateModalBook = ({ open, setOpen, book }: IProps) => {
+    const [updateBook , {isLoading}] =  useUpdateBookMutation();
 
     const form = useForm({
         defaultValues: {
@@ -55,7 +57,9 @@ const UpdateModalBook = ({ open, setOpen, book }: IProps) => {
             });
         }
     }, [book, form]);
-
+    if(isLoading){
+       <p>Loading...</p>
+    }
 
     const onSubmit: SubmitHandler<FieldValues> = async (data) => {
         console.log("Form Data:", data);
@@ -70,8 +74,11 @@ const UpdateModalBook = ({ open, setOpen, book }: IProps) => {
             genre: data.genre,
             copies: Number(data.copies),
         };
-
+         
         console.log("Update Payload:", payload._id);
+        const res = await updateBook({bookId : payload._id , body : payload});
+        console.log(res);
+        
         setOpen(false);
         form.reset();
     };
