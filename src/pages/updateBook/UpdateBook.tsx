@@ -1,3 +1,4 @@
+
 import { Button } from "@/components/ui/button";
 import {
     Dialog,
@@ -8,11 +9,11 @@ import {
     DialogTitle,
 } from "@/components/ui/dialog";
 import {
+    Form,
+    FormControl,
     FormField,
     FormItem,
     FormLabel,
-    FormControl,
-    Form,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import {
@@ -22,18 +23,13 @@ import {
     SelectTrigger,
     SelectValue,
 } from "@/components/ui/select";
-import type { IBook } from "@/types";
-import { useEffect } from "react";
-import { useForm, type FieldValues, type SubmitHandler } from "react-hook-form";
+import { , useState } from "react";
 
-interface IProps {
-    open: boolean;
-    setOpen: (val: boolean) => void;
-    book: IBook | null;
-}
+import { useForm } from "react-hook-form";
+// import { useUpdateBookMutation } from "@/redux/api/itemCreateAPI"; // Replace with your update API
 
-const UpdateModalBook = ({ open, setOpen, book }: IProps) => {
-
+export function UpdateBook() {
+    const [open, setOpen] = useState(false);
     const form = useForm({
         defaultValues: {
             title: "",
@@ -44,37 +40,7 @@ const UpdateModalBook = ({ open, setOpen, book }: IProps) => {
         },
     });
 
-    useEffect(() => {
-        if (book) {
-            form.reset({
-                title: book.title,
-                description: book.description,
-                author: book.author,
-                copies: String(book.copies),
-                genre: book.genre,
-            });
-        }
-    }, [book, form]);
-
-
-    const onSubmit: SubmitHandler<FieldValues> = async (data) => {
-        console.log("Form Data:", data);
-        if (!book) {
-            throw ("Book not found.");
-        }
-        const payload = {
-            _id: book._id,
-            title: data.title,
-            description: data.description,
-            author: data.author,
-            genre: data.genre,
-            copies: Number(data.copies),
-        };
-
-        console.log("Update Payload:", payload._id);
-        setOpen(false);
-        form.reset();
-    };
+  
 
     return (
         <Dialog open={open} onOpenChange={setOpen}>
@@ -82,6 +48,7 @@ const UpdateModalBook = ({ open, setOpen, book }: IProps) => {
                 <DialogHeader>
                     <DialogTitle>Update Book</DialogTitle>
                 </DialogHeader>
+
                 <Form {...form}>
                     <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
                         <FormField
@@ -127,21 +94,27 @@ const UpdateModalBook = ({ open, setOpen, book }: IProps) => {
                                 <FormItem>
                                     <FormLabel>Copies</FormLabel>
                                     <FormControl>
-                                        <Input placeholder="Copies" {...field} />
+                                        <Input
+                                            type="number"
+                                            {...field}
+                                            value={field.value}
+                                            onChange={(e) => field.onChange(Number(e.target.value))} // 👈 force number
+                                        />
                                     </FormControl>
                                 </FormItem>
                             )}
                         />
+
                         <FormField
                             control={form.control}
                             name="genre"
                             render={({ field }) => (
                                 <FormItem>
                                     <FormLabel>Genre</FormLabel>
-                                    <Select onValueChange={field.onChange} value={field.value}>
+                                    <Select onValueChange={field.onChange} defaultValue={field.value}>
                                         <FormControl className="w-full border">
                                             <SelectTrigger>
-                                                <SelectValue placeholder="Select Genre to display" />
+                                                <SelectValue placeholder="Select Genre" />
                                             </SelectTrigger>
                                         </FormControl>
                                         <SelectContent>
@@ -156,13 +129,14 @@ const UpdateModalBook = ({ open, setOpen, book }: IProps) => {
                                 </FormItem>
                             )}
                         />
+
                         <DialogFooter>
                             <DialogClose asChild>
                                 <Button type="button" variant="outline">
                                     Cancel
                                 </Button>
                             </DialogClose>
-                            <Button type="submit">
+                            <Button disabled={isLoading} type="submit">
                                 Save changes
                             </Button>
                         </DialogFooter>
@@ -171,6 +145,5 @@ const UpdateModalBook = ({ open, setOpen, book }: IProps) => {
             </DialogContent>
         </Dialog>
     );
-};
+}
 
-export default UpdateModalBook;
