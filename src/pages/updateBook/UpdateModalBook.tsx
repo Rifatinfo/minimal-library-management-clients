@@ -73,6 +73,7 @@ const UpdateModalBook = ({ open, setOpen, book }: IProps) => {
             author: data.author,
             genre: data.genre,
             copies: Number(data.copies),
+            available :  Number(data.copies) > 0
         };
          
         console.log("Update Payload:", payload._id);

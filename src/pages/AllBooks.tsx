@@ -30,15 +30,16 @@ const AllBooks = () => {
                 </div>
             </div>
             <div>
-                <div className="rounded-md border mt-6">
+                <div className="rounded-md border mt-6 ">
                     <Table>
                         <TableHeader>
                             <TableRow>
                                 <TableHead>Title</TableHead>
                                 <TableHead>Author</TableHead>
                                 <TableHead>Genre</TableHead>
-                                <TableHead>Copies</TableHead>
-                                <TableHead>Available</TableHead>
+                                <TableHead className="md:px-24 px-10">Copies</TableHead>
+                                <TableHead className="md:px-24 px-10">Available</TableHead>
+                                <TableHead className="md:px-24 px-10">Borrow</TableHead>
                                 <TableHead>Edit</TableHead>
                                 <TableHead>Delete</TableHead>
                             </TableRow>

@@ -4,6 +4,7 @@ import { TableCell, TableRow } from "@/components/ui/table";
 import type { IBook } from "@/types";
 import { cn } from "@/lib/utils";
 import { useDeleteBookMutation } from "@/redux/api/itemCreateAPI";
+import { Button } from "@/components/ui/button";
 
 interface IProps {
   book: IBook;
@@ -35,12 +36,16 @@ const AllBookTable = ({ book, onEdit }: IProps) => {
           {book.available ? "Yes" : "No"}
         </span>
       </TableCell>
+      <TableCell className="text-center py-2">
+        <Button className="btn bg-blue-500 hover:text-blue-700 text-lg cursor-pointer transition">Borrow</Button>
+      </TableCell>
       <TableCell className="text-center px-4 py-2">
         <FaPencil
           onClick={onEdit}
           className="text-blue-500 hover:text-blue-700 text-lg cursor-pointer transition"
         />
       </TableCell>
+      
       <TableCell className="text-center px-4 py-2">
         <MdDelete
             onClick={() => deleteBook({ bookId: book._id })}
