@@ -1,10 +1,11 @@
 export interface IBook {
     id: string;
-    Title: string;
-    Author: string;
-    ISBN: string;
-    Description: string;
-    Copies: number;
-    Available: boolean;
-    Genre: "Classic" | "Literary" | "Historical " | "Mystery" | "Thriller" | "Horror" | "Science " | "Fantasy" | "Adventure" | "Romance" | "Western" ;
+    title: string;
+    author: string;
+    isbn: string;
+    description: string;
+    copies: number;
+    available: boolean;
+    genre: "FICTION" | "NON_FICTION" | "SCIENCE " | "HISTORY" | "BIOGRAPHY" | "FANTASY" ;
 }
+

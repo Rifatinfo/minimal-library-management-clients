@@ -1,5 +1,3 @@
-
-
 import { Button } from "@/components/ui/button";
 import {
     Dialog,
@@ -20,42 +18,42 @@ import {
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { addBook } from "@/redux/features/book/bookSlice";
-import { useAppDispatch } from "@/redux/hooks/hooks";
-import type { IBook } from "@/types";
+import { useAddBooksMutation } from "@/redux/api/itemCreateAPI";
+
 
 
 import { useState } from "react";
 import { useForm, type FieldValues, type SubmitHandler } from "react-hook-form";
 
 export function AddModalBook() {
+    const [addBooks , {isLoading}] = useAddBooksMutation();
     const [open, setOpen] = useState(false);
-     const dispatch = useAppDispatch();
+    //  const dispatch = useAppDispatch();
     const form = useForm();
 
-    const onSubmit: SubmitHandler<FieldValues> = (data) => {
+    const onSubmit: SubmitHandler<FieldValues> = async (data) => {
         console.log("Form Data:", data);
-        dispatch(addBook(data as IBook))
+        // dispatch(addBook(data as IBook))
+        const res = await addBooks(data);
+        console.log(res);
         setOpen(false);
         form.reset();
     };
-
+     if(isLoading){
+        <p>Loading...</p>
+     }
 
     return (
         <div>
             <div className="flex justify-start items-start gap-5">
                 <Tabs defaultValue="Classic">
                     <TabsList>
-                        <TabsTrigger  value="Classic">Classic</TabsTrigger>
-                        <TabsTrigger  value="Literary">Literary</TabsTrigger>
-                        <TabsTrigger  value="Mystery">Mystery</TabsTrigger>
-                        <TabsTrigger  value="Thriller">Thriller</TabsTrigger>
-                        <TabsTrigger  value="Science">Science</TabsTrigger>
-                        <TabsTrigger  value="Horror">Horror</TabsTrigger>
-                        <TabsTrigger  value="Fantasy">Fantasy</TabsTrigger>
-                        <TabsTrigger  value="Adventure">Adventure</TabsTrigger>
-                        <TabsTrigger  value="Romance">Romance</TabsTrigger>
-                        <TabsTrigger  value="Western">Western</TabsTrigger>
+                        <TabsTrigger  value="Classic">FICTION</TabsTrigger>
+                        <TabsTrigger  value="Literary">NON_FICTION</TabsTrigger>
+                        <TabsTrigger  value="Mystery">SCIENCE</TabsTrigger>
+                        <TabsTrigger  value="Thriller">HISTORY</TabsTrigger>
+                        <TabsTrigger  value="Science">BIOGRAPHY</TabsTrigger>
+                        <TabsTrigger  value="Horror">FANTASY</TabsTrigger>
                     </TabsList>
                 </Tabs>
 
@@ -73,24 +71,24 @@ export function AddModalBook() {
                         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
                             <FormField
                                 control={form.control}
-                                name="Title"
+                                name="title"
                                 render={({ field }) => (
                                     <FormItem>
                                         <FormLabel>Title</FormLabel>
                                         <FormControl>
-                                            <Input placeholder="Enter name" {...field} value={field.value || ""} />
+                                            <Input placeholder="Enter Title" {...field} value={field.value || ""} />
                                         </FormControl>
                                     </FormItem>
                                 )}
                             />
                             <FormField
                                 control={form.control}
-                                name="Description"
+                                name="description"
                                 render={({ field }) => (
                                     <FormItem>
                                         <FormLabel>Description</FormLabel>
                                         <FormControl>
-                                            <Input placeholder="Enter name" {...field} value={field.value || ""} />
+                                            <Input placeholder="Enter Description" {...field} value={field.value || ""} />
                                         </FormControl>
                                     </FormItem>
                                 )}
@@ -98,19 +96,19 @@ export function AddModalBook() {
 
                             <FormField
                                 control={form.control}
-                                name="Author"
+                                name="author"
                                 render={({ field }) => (
                                     <FormItem>
                                         <FormLabel>Author</FormLabel>
                                         <FormControl>
-                                            <Input placeholder="description" {...field} />
+                                            <Input placeholder="Author" {...field} />
                                         </FormControl>
                                     </FormItem>
                                 )}
                             />
                             <FormField
                                 control={form.control}
-                                name="Copies"
+                                name="copies"
                                 render={({ field }) => (
                                     <FormItem>
                                         <FormLabel>Copies</FormLabel>
@@ -124,28 +122,24 @@ export function AddModalBook() {
                             {/* select filed  */}
                             <FormField
                                 control={form.control}
-                                name="Genre"
+                                name="genre"
                                 render={({ field }) => (
                                     <FormItem>
                                         <FormLabel>Genre</FormLabel>
                                         <Select onValueChange={field.onChange} defaultValue={field.value}>
                                             <FormControl className="w-full border">
                                                 <SelectTrigger>
-                                                    <SelectValue placeholder="Select a verified email to display" />
+                                                    <SelectValue placeholder="Select Genre to display" />
                                                 </SelectTrigger>
                                             </FormControl>
                                             <SelectContent>
-                                                <SelectItem value="Classic">Classic</SelectItem>
-                                                <SelectItem value="Literary">Literary</SelectItem>
-                                                <SelectItem value="Historical">Historical</SelectItem>
-                                                <SelectItem value="Mystery">Mystery</SelectItem>
-                                                <SelectItem value="Thriller">Thriller</SelectItem>
-                                                <SelectItem value="Horror">Horror</SelectItem>
-                                                <SelectItem value="Fantasy">Fantasy</SelectItem>
-                                                <SelectItem value="Adventure">Adventure</SelectItem>
-                                                <SelectItem value="Romance">Romance</SelectItem>
-                                                <SelectItem value="Western">Western</SelectItem>
-                                            </SelectContent>
+                                                <SelectItem value="FICTION">FICTION</SelectItem>
+                                                <SelectItem value="NON_FICTION">NON_FICTION</SelectItem>
+                                                <SelectItem value="SCIENCE">SCIENCE</SelectItem>
+                                                <SelectItem value="HISTORY">HISTORY</SelectItem>
+                                                <SelectItem value="BIOGRAPHY">BIOGRAPHY</SelectItem>
+                                                <SelectItem value="FANTASY">FANTASY</SelectItem>
+                                            </SelectContent> 
                                         </Select>
                                     </FormItem>
                                 )}
@@ -156,7 +150,7 @@ export function AddModalBook() {
                                         Cancel
                                     </Button>
                                 </DialogClose>
-                                <Button type="submit">Save changes</Button>
+                                <Button disabled={isLoading} type="submit">Save changes</Button>
                             </DialogFooter>
                         </form>
                     </Form>

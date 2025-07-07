@@ -1,13 +1,19 @@
-import { filterBooks, selectBooks } from "@/redux/features/book/bookSlice";
-import { useAppSelector } from "@/redux/hooks/hooks";
+// import {  selectBooks } from "@/redux/features/book/bookSlice";
+// import { useAppSelector } from "@/redux/hooks/hooks";
 import { AddModalBook } from "./book/AddModalBook";
 import { Table, TableBody, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import AllBookTable from "./book/AllBookTable";
+import { useGetBooksQuery } from "@/redux/api/itemCreateAPI";
+import type { IBook } from "@/types";
 
 const AllBooks = () => {
-    const books = useAppSelector(selectBooks);
-    const Books = useAppSelector(filterBooks);
-    console.log(books, Books);
+    // const books = useAppSelector(selectBooks);
+    const {data, isLoading} = useGetBooksQuery(undefined);
+    if(isLoading){
+       return <p>loading....</p>
+    }
+    console.log(data.data);
+    
 
     return (
         <div className="mt-20 max-w-7xl mx-auto">
@@ -31,7 +37,7 @@ const AllBooks = () => {
                             </TableRow>
                         </TableHeader>
                         <TableBody>
-                            {books.map((book) => (
+                            {data.data.map((book: IBook) => (
                                <AllBookTable book={book} key={book.id}/>
                             ))}
                         </TableBody>
