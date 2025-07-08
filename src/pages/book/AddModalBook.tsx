@@ -17,7 +17,7 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
+// import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useAddBooksMutation } from "@/redux/api/itemCreateAPI";
 
 
@@ -51,16 +51,6 @@ export function AddModalBook() {
     return (
         <div>
             <div className="flex justify-start items-start gap-5">
-                <Tabs defaultValue="Classic">
-                    <TabsList>
-                        <TabsTrigger  value="Classic">FICTION</TabsTrigger>
-                        <TabsTrigger  value="Literary">NON_FICTION</TabsTrigger>
-                        <TabsTrigger  value="Thriller">HISTORY</TabsTrigger>
-                        <TabsTrigger  value="Science">BIOGRAPHY</TabsTrigger>
-                        <TabsTrigger  value="Horror">FANTASY</TabsTrigger>
-                    </TabsList>
-                </Tabs>
-
                 <Dialog open={open} onOpenChange={setOpen}>
                 <DialogTrigger asChild>
 
