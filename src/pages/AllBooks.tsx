@@ -6,10 +6,12 @@ import { useGetBooksQuery } from "@/redux/api/itemCreateAPI";
 import type { IBook } from "@/types";
 import { useState } from "react";
 import UpdateModalBook from "./updateBook/UpdateModalBook";
+import { BorrowModal } from "./borrow/BorrowModal";
 
 const AllBooks = () => {
     const [open, setOpen] = useState(false);
     const [selectedBook, setSelectedBook] = useState<IBook | null>(null);
+    const [selectedBorrow, setSelectedBorrow] = useState<IBook | null>(null);
 
     const handleEdit = (book: IBook) => {
         setSelectedBook(book);
@@ -46,12 +48,15 @@ const AllBooks = () => {
                         </TableHeader>
                         <TableBody>
                             {data.data.map((book: IBook) => (
-                                <AllBookTable book={book} key={book._id}  onEdit={() => handleEdit(book)} />
+                                <AllBookTable book={book} key={book._id}  onEdit={() => handleEdit(book)} setSelectedBorrow={setSelectedBorrow} />
                             ))}
                         </TableBody>
                     </Table>
                         {selectedBook && (
                             <UpdateModalBook open={open} setOpen={setOpen} book={selectedBook} />
+                        )}
+                        {selectedBorrow && (
+                            <BorrowModal selectedBorrow={selectedBorrow} setSelectedBorrow={setSelectedBorrow} />
                         )}
                 </div>
             </div>
