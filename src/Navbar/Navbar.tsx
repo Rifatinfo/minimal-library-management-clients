@@ -10,7 +10,6 @@ const Navbar = () => {
     const menuItems = [
         { name: "Home", link: "/" },
         { name: "All Books", link: "/all-books" },
-        { name: "Add Book", link: "/add-book" },
         { name: "Borrow Summary", link: "/borrow-summary" },
     ];
 
