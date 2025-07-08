@@ -3,7 +3,6 @@ import { RiMenuUnfold2Fill } from "react-icons/ri";
 import { BiX } from "react-icons/bi";
 import { FiSearch } from "react-icons/fi";
 import { Link as RouterLink } from "react-router-dom";
-
 const Navbar = () => {
     const [open, setOpen] = useState(false);
 
@@ -14,14 +13,14 @@ const Navbar = () => {
     ];
 
     return (
-        <div className="w-full relative z-50">
-            <header className="fixed top-0 left-0 w-full flex justify-between items-center px-5 py-3 bg-blue-50 shadow-md text-black z-50">
+        <div className="w-full fixed top-0 left-0 z-[100]">
+            <header className="fixed top-0 left-0 w-full flex justify-between items-center px-5 py-3 text-blue-400 ">
                 <RouterLink to="/" className="flex items-center gap-3">
-                    <img
+                    {/* <img
                         className="h-[40px] w-auto"
-                        src="https://via.placeholder.com/150x40?text=Logo"
-                        alt="Logo"
-                    />
+                        src=""
+                        alt=""
+                    /> */}
                 </RouterLink>
 
                 {/* Desktop Menu */}
@@ -30,7 +29,7 @@ const Navbar = () => {
                         <li key={item.name}>
                             <RouterLink
                                 to={item.link}
-                                className="hover:text-red-600 cursor-pointer"
+                                className="hover:text-white cursor-pointer"
                                 onClick={() => setOpen(false)}
                             >
                                 {item.name}

@@ -1,10 +1,9 @@
-
+import Slider from "./BannerSlider/Slider";
 
 const Home = () => {
-
     return (
-        <div className="mt-20 max-w-7xl mx-auto">
-            
+        <div>
+            <Slider/>
         </div>
     );
 };
