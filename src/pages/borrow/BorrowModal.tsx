@@ -25,6 +25,8 @@ import type { IBook } from "@/types";
 import { format } from "date-fns";
 import { CalendarIcon } from "lucide-react";
 import { useForm, type FieldValues, type SubmitHandler } from "react-hook-form";
+import { useNavigate } from "react-router";
+import { toast } from "react-toastify";
 
 interface BorrowModalProps {
     selectedBorrow: IBook | null
@@ -33,6 +35,7 @@ interface BorrowModalProps {
 
 export function BorrowModal({ setSelectedBorrow, selectedBorrow }: BorrowModalProps) {
     const [addBorrow, { isLoading }] = useAddBorrowMutation();
+    const navigate = useNavigate()
     const form = useForm();
 
     const onSubmit : SubmitHandler<FieldValues> = async (data) => {
@@ -50,9 +53,10 @@ export function BorrowModal({ setSelectedBorrow, selectedBorrow }: BorrowModalPr
             book: selectedBorrow._id,
             quantity : copies,
         }).unwrap();
-        alert("Borrow Successfully");
+        toast.success("Borrow Successfully");
         setSelectedBorrow(null);
         form.reset();
+        navigate("/borrow-summary");
     }
 
     if (isLoading) {

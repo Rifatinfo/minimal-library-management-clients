@@ -24,6 +24,7 @@ import { useAddBooksMutation } from "@/redux/api/itemCreateAPI";
 
 import { useState } from "react";
 import { useForm, type FieldValues, type SubmitHandler } from "react-hook-form";
+import { toast } from "react-toastify";
 
 export function AddModalBook() {
     const [addBooks , {isLoading}] = useAddBooksMutation();
@@ -41,6 +42,7 @@ export function AddModalBook() {
            return;
         }
         console.log(res);
+        toast.success("Book Successfully");
         setOpen(false);
         form.reset();
     };
@@ -140,7 +142,6 @@ export function AddModalBook() {
                                             <SelectContent>
                                                 <SelectItem value="FICTION">FICTION</SelectItem>
                                                 <SelectItem value="NON_FICTION">NON_FICTION</SelectItem>
-                                                <SelectItem value="SCIENCE">SCIENCE</SelectItem>
                                                 <SelectItem value="HISTORY">HISTORY</SelectItem>
                                                 <SelectItem value="BIOGRAPHY">BIOGRAPHY</SelectItem>
                                                 <SelectItem value="FANTASY">FANTASY</SelectItem>

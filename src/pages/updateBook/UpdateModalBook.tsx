@@ -26,6 +26,7 @@ import { useUpdateBookMutation } from "@/redux/api/itemCreateAPI";
 import type { IBook } from "@/types";
 import { useEffect } from "react";
 import { useForm, type FieldValues, type SubmitHandler } from "react-hook-form";
+import { toast } from "react-toastify";
 
 interface IProps {
     open: boolean;
@@ -79,7 +80,7 @@ const UpdateModalBook = ({ open, setOpen, book }: IProps) => {
         console.log("Update Payload:", payload._id);
         const res = await updateBook({bookId : payload._id , body : payload});
         console.log(res);
-        
+        toast.success("Update Successfully");
         setOpen(false);
         form.reset();
     };

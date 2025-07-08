@@ -26,8 +26,8 @@ const BorrowSummary = () => {
           <TableHeader>
             <TableRow>
               <TableHead>Title</TableHead>
-              <TableHead>Total Quantity</TableHead>
               <TableHead>ISBN</TableHead>
+              <TableHead>Total Quantity</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
