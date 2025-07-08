@@ -9,48 +9,52 @@ import { Button } from "@/components/ui/button";
 interface IProps {
   book: IBook;
   onEdit: () => void;
-   setSelectedBorrow: (value: IBook | null) => void;
+  setSelectedBorrow: (value: IBook | null) => void;
 }
 
+const AllBookTable = ({ book, onEdit, setSelectedBorrow }: IProps) => {
+  const [deleteBook] = useDeleteBookMutation();
 
-const AllBookTable = ({ book, onEdit, setSelectedBorrow}: IProps) => {
-    const [deleteBook] =  useDeleteBookMutation();
-  
   return (
     <TableRow className="border-b hover:bg-muted transition-colors">
-      <TableCell className="whitespace-nowrap px-4 py-2">
+      <TableCell className="px-4 py-2 whitespace-nowrap flex items-center gap-2">
         <span
-          className={cn("size-3 rounded-full inline-block", {
+          className={cn("w-3 h-3 rounded-full inline-block", {
             "bg-yellow-500": book.genre === "FICTION",
             "bg-gray-500": book.genre === "NON_FICTION",
             "bg-indigo-600": book.genre === "HISTORY",
             "bg-red-600": book.genre === "BIOGRAPHY",
             "bg-red-500": book.genre === "FANTASY",
           })}
-        ></span>{" "}
+        ></span>
         {book.title}
       </TableCell>
-      <TableCell className="whitespace-nowrap px-4 py-2">{book.author}</TableCell>
-      <TableCell className="whitespace-nowrap px-4 py-2">{book.genre.trim()}</TableCell>
-      <TableCell className="whitespace-nowrap px-4 py-2 text-center">{book.copies}</TableCell>
-      <TableCell className="whitespace-nowrap px-4 py-2 text-center">
+      <TableCell className="px-4 py-2 whitespace-nowrap">{book.author}</TableCell>
+      <TableCell className="px-4 py-2 whitespace-nowrap">{book.genre.trim()}</TableCell>
+      <TableCell className="px-4 py-2 text-center">{book.copies}</TableCell>
+      <TableCell className="px-4 py-2 text-center">{book.isbn}</TableCell>
+      <TableCell className="px-4 py-2 text-center">
         <span className={book.available ? "text-green-600 font-medium" : "text-red-500 font-medium"}>
           {book.available ? "Yes" : "No"}
         </span>
       </TableCell>
-      <TableCell className="text-center py-2">
-        <Button onClick={() => setSelectedBorrow(book)} className="btn bg-blue-500 hover:text-blue-700 text-lg cursor-pointer transition">Borrow</Button>
+      <TableCell className="px-4 py-2 text-center">
+        <Button
+          onClick={() => setSelectedBorrow(book)}
+          className="bg-blue-500 hover:bg-blue-600 text-white text-sm px-3 py-1 rounded"
+        >
+          Borrow
+        </Button>
       </TableCell>
-      <TableCell className="text-center px-4 py-2">
+      <TableCell className="px-4 py-2 text-center">
         <FaPencil
           onClick={onEdit}
           className="text-blue-500 hover:text-blue-700 text-lg cursor-pointer transition"
         />
       </TableCell>
-      
-      <TableCell className="text-center px-4 py-2">
+      <TableCell className="px-4 py-2 text-center">
         <MdDelete
-            onClick={() => deleteBook({ bookId: book._id })}
+          onClick={() => deleteBook({ bookId: book._id })}
           className="text-red-500 hover:text-red-700 text-xl cursor-pointer transition"
         />
       </TableCell>

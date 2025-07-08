@@ -35,25 +35,25 @@ export function BorrowModal({ setSelectedBorrow, selectedBorrow }: BorrowModalPr
     const [addBorrow, { isLoading }] = useAddBorrowMutation();
     const form = useForm();
 
-    const onSubmit: SubmitHandler<FieldValues> = async (data) => {
-        console.log("Form Data:", data);
+    const onSubmit : SubmitHandler<FieldValues> = async (data) => {
+        console.log("Form Data : ", data);
         const copies = Number(data.copies);
-        if (!copies || copies <= 0) {
-            alert("Please enter a valid number of copies to borrow.");
-            return;
+        if(!copies || copies <= 0){
+           alert("Please enter a valid number of copies to borrow");
+           return;
         }
-        if (!selectedBorrow?._id) {
-            alert("Book ID not found. Please try again.");
-            return;
+        if(!selectedBorrow?._id){
+           alert("Book ID not found. Please try again");
+           return;
         }
         await addBorrow({
             book: selectedBorrow._id,
-            quantity: copies,
+            quantity : copies,
         }).unwrap();
         alert("Borrow Successfully");
         setSelectedBorrow(null);
         form.reset();
-    };
+    }
 
     if (isLoading) {
         <p>Loading ...</p>

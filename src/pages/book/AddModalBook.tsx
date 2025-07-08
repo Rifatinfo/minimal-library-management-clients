@@ -35,6 +35,11 @@ export function AddModalBook() {
         console.log("Form Data:", data);
         // dispatch(addBook(data as IBook))
         const res = await addBooks(data);
+        const copies = Number(data.copies);
+        if(!copies || copies <= 0){
+           alert("Please enter a valid number of copies ");
+           return;
+        }
         console.log(res);
         setOpen(false);
         form.reset();
@@ -50,7 +55,6 @@ export function AddModalBook() {
                     <TabsList>
                         <TabsTrigger  value="Classic">FICTION</TabsTrigger>
                         <TabsTrigger  value="Literary">NON_FICTION</TabsTrigger>
-                        <TabsTrigger  value="Mystery">SCIENCE</TabsTrigger>
                         <TabsTrigger  value="Thriller">HISTORY</TabsTrigger>
                         <TabsTrigger  value="Science">BIOGRAPHY</TabsTrigger>
                         <TabsTrigger  value="Horror">FANTASY</TabsTrigger>
@@ -118,7 +122,18 @@ export function AddModalBook() {
                                     </FormItem>
                                 )}
                             />
-
+                            <FormField
+                                control={form.control}
+                                name="isbn"
+                                render={({ field }) => (
+                                    <FormItem>
+                                        <FormLabel>ISBN</FormLabel>
+                                        <FormControl>
+                                            <Input placeholder="ISBN" {...field} />
+                                        </FormControl>
+                                    </FormItem>
+                                )}
+                            />
                             {/* select filed  */}
                             <FormField
                                 control={form.control}
